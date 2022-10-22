@@ -22,7 +22,7 @@ exports.CreateNewOrder = async (req, res) => {
             name : req.Buyer.name, mobile : req.Buyer.mobile
         });
         for (let i = 0; i < Cart.length; i++) {
-            const SellerId = (await Product.findById(Cart[i]._id).select('seller')).seller;
+            const SellerId = Cart[i].sellerId;
             const newOrder = new Order({
                 ...Cart[i], buyer : Buyer._id, seller : SellerId,
                 address : newAddress._id, status : "successfully Orderd",
