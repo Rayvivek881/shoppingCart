@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Buyer = require('../models/BuyerModel.js');
 const Product = require('../models/ProductModel.js');
-const UserProduct = require('../models/UserProductModel.js/index.js');
+const UserProduct = require('../models/UserProductModel.js');
 const encryption = require('../middlewares/encryption.js');
 
 // Buyer Sign Up
@@ -124,16 +124,17 @@ exports.searchProducts = async (req, res) => {
 
 exports.addToCart = async (req, res) => {
     try {
-        const { productid, quantity } = req.body;
-        const product = await Product.findById(productid).select('name price');
+        const { productId, quantity } = req.body;
+        const product = await Product.findById(productId).select('name price seller');
         if (!product) {
             return res.status(400).json({message: 'Product does not exist'});
         }
         const newObject = new UserProduct({
-            productid, quantity, name: product.name, price: product.price
+            productId, quantity, name: product.name, price: product.price,
+            sellerId : product.seller
         });
         const savedObject = await newObject.save();
-        await Buyer.findByIdAndUpdate(req.buyerid, {$addToSet: {carts: savedObject._id}});
+        await Buyer.findByIdAndUpdate(req.Buyer._id, {$addToSet: {carts: savedObject._id}});
         res.status(200).json(savedObject);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -150,7 +151,7 @@ exports.addToCart = async (req, res) => {
 
 exports.getCart = async (req, res) => {
     try {
-        const buyer = await Buyer.findById(req.buyerid)
+        const buyer = await Buyer.findById(req.Buyer._id)
             .select('carts').populate('carts');
         res.status(200).json(buyer.carts);
     } catch (error) {
@@ -169,7 +170,7 @@ exports.getCart = async (req, res) => {
 exports.deleteProductFromCart = async (req, res) => {
     try {
         const { id } = req.params;
-        const buyer = await Buyer.findById(req.buyerid);
+        const buyer = await Buyer.findById(req.Buyer._id);
         buyer.carts.pull(id);
         await buyer.save();
         await UserProduct.findByIdAndDelete(id);
@@ -230,9 +231,9 @@ exports.clearCart = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
     try {
-        const { name, username, mobile } = req.body;
+        const { name, mobile } = req.body;
         const buyer = await Buyer.findByIdAndUpdate(req.Buyer._id, {
-            $set : {username, name, mobile}
+            $set : {name, mobile}
         });
         res.status(200).json(buyer);
     } catch (error) {

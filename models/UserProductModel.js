@@ -8,10 +8,14 @@ var UserProduct = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
     },
+    sellerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Seller'
+    },
     quantity: {
         type: Number,
         required: true
-    },
+    }, 
     price: {
         type: Number,
         required: true
