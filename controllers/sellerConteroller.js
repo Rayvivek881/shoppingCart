@@ -158,7 +158,8 @@ exports.deleteProduct = async (req, res) => {
 
 exports.getOrders = async (req, res) => {
     try {
-        const orders = await OrderModel.find({seller: req.seller._id});
+        const orders = await OrderModel.find({seller: req.Seller._id});
+        console.log(req.Seller);
         res.status(200).json(orders);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -212,7 +213,7 @@ exports.deleteOrder = async (req, res) => {
 
 exports.getProfile = async (req, res) => {
     try {
-        const seller = await SellerModel.findOne({_id: req.seller._id})
+        const seller = await SellerModel.findOne({_id: req.Seller._id})
             .select({password: 0, products: 0, orders: 0});
         res.status(200).json(seller);
     } catch (error) {
@@ -234,7 +235,7 @@ exports.updateProfile = async (req, res) => {
         if (await SellerModel.findOne({ $or : [{username: username}]})) {
             return res.status(400).json({message: 'Username already exists'});
         }
-        const seller = await SellerModel.findOneAndUpdate({_id: req.seller._id}, {
+        const seller = await SellerModel.findOneAndUpdate({_id: req.Seller._id}, {
             $set: {
                 name, username, mobile
             }
@@ -256,7 +257,7 @@ exports.updateProfile = async (req, res) => {
 exports.getProductsByCategory = async (req, res) => {
     try {
         const products = await ProductModel
-            .find({category: {$regex: req.params.category, $options: 'i'}, seller: req.seller._id});
+            .find({category: {$regex: req.params.category, $options: 'i'}, seller: req.Seller._id});
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -274,7 +275,7 @@ exports.getProductsByCategory = async (req, res) => {
 exports.getProductsByName = async (req, res) => {
     try {
         const products = await ProductModel
-            .find({name: {$regex: req.params.name, $options: 'i'}, seller: req.seller._id});
+            .find({name: {$regex: req.params.name, $options: 'i'}, seller: req.Seller._id});
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -292,7 +293,7 @@ exports.getProductsByName = async (req, res) => {
 exports.getOrdersByStatus = async (req, res) => {
     try {
         const orders = await OrderModel
-            .find({status: {$regex: req.params.status, $options: 'i'}, seller: req.seller._id});
+            .find({status: {$regex: req.params.status, $options: 'i'}, seller: req.Seller._id});
         res.status(200).json(orders);
     } catch (error) {
         res.status(500).json({ message: error.message });

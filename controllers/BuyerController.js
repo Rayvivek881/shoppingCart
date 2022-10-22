@@ -14,18 +14,22 @@ const encryption = require('../middlewares/encryption.js');
 exports.buyerSignUp = async (req, res) => {
     try {
         const { 
-            name, username, mobile, password } = req.body;
+            name, username, mobile, password, zip, address
+        } = req.body;
         const buyer = await Buyer.findOne({$or: [{username: username}, {mobile: mobile}]});
         if (buyer) {
             return res.status(400).json({message: 'Buyer already exists'});
         }
+        const newaddress = {
+            zip, details : address,
+            name, mobile
+        }
         const newBuyer = new Buyer({
-            name, username, mobile, password
+            name, username, mobile, 
+            password : encryption(password) , address: newaddress._id
         });
-        newBuyer.password = encryption(password);
         const savedBuyer = await newBuyer.save();
-
-        const token = jwt.sign({buyerid: savedBuyer._id}, process.env.SECRET, {
+        const token = jwt.sign({BuyerId: savedBuyer._id}, process.env.JWT_TOKEN, {
             expiresIn: '3h'
         });
         res.status(200).json({token});
@@ -49,10 +53,10 @@ exports.buyerSignIn = async (req, res) => {
         if (!buyer) {
             return res.status(400).json({message: 'Buyer does not exist'});
         }
-        if (buyer.password !== encryption(password)) {
+        if (buyer.password != encryption(password)) {
             return res.status(400).json({message: 'Invalid Password'});
         }
-        const token = jwt.sign({buyerid: buyer._id}, process.env.SECRET, {
+        const token = jwt.sign({BuyerId: buyer._id}, process.env.JWT_TOKEN, {
             expiresIn: '3h'
         });
         res.status(200).json({token});
@@ -65,7 +69,7 @@ exports.buyerSignIn = async (req, res) => {
 /**
  *
  * @method GET
- * @link http://localhost:3000/api/buyer/products
+ * @link http://localhost:3000/api/buyer/getAllProducts
  * @returns products
  */
 
@@ -82,7 +86,7 @@ exports.getAllProducts = async (req, res) => {
 /**
  * 
  * @method GET
- * @link http://localhost:3000/api/buyer/products/:id
+ * @link http://localhost:3000/api/buyer/getProductById/:id
  * @returns product
  */
 
@@ -118,7 +122,7 @@ exports.searchProducts = async (req, res) => {
 /**
  * 
  * @method POST
- * @link http://localhost:3000/api/buyer/cart
+ * @link http://localhost:3000/api/buyer/addToCart
  * @returns cart
  */
 

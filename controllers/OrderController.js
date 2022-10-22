@@ -21,21 +21,26 @@ exports.CreateNewOrder = async (req, res) => {
             details : address, zip,
             name : req.Buyer.name, mobile : req.Buyer.mobile
         });
-        for (let i = 0; i < Cart.length; i++) {
-            const SellerId = Cart[i].sellerId;
+        async function answer(seller, productId, name, price, quantity) {
             const newOrder = new Order({
-                ...Cart[i], buyer : Buyer._id, seller : SellerId,
-                address : newAddress._id, status : "successfully Orderd",
+                buyer : Buyer._id, seller, address : newAddress._id, 
+                status : "pandding", productId, name, price, quantity
             });
-            Buyer.carts.push(newOrder._id);
-            await Seller.findByIdAndUpdate(SellerId, {
-                $push : { orders : newOrder._id }
+            const savedOrder = await newOrder.save();
+            console.log();
+            await Seller.findByIdAndUpdate(seller, {
+                $addToSet : { orders : savedOrder._id }
             });
-            await newOrder.save();
+            Buyer.orders.push(newOrder._id);
         }
+        const promises = Cart.map(async (product) =>
+            await answer(product.sellerId, product.productId, product.name, product.price, product.quantity)
+        );
+        await Promise.all(promises);
         Buyer.carts = [];
         await newAddress.save();
         await Buyer.save();
+        res.status(200).json({ status: 'success', message: 'order created successfully' });
     } catch (error) {
         res.status(500).json({ status: 'error', message: error.message });
     }
@@ -55,7 +60,7 @@ exports.DeleteOrder = async (req, res) => {
             return res.status(404).json({ status: 'error', message: 'order not found' });
         }
         await BuyerModel.findByIdAndUpdate(req.Buyer._id, {
-            $pull : { carts : order._id }
+            $pull : { orders : order._id }
         });
         await Seller.findByIdAndUpdate(order.seller, {
             $pull : { orders : order._id }

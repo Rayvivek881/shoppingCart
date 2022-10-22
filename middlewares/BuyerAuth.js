@@ -10,11 +10,11 @@ const BuyerAuth = async (req, res, next) => {
     }
     try {
         const verified = jwt.verify(token, JWT_TOKEN);
-        req.Buyer = await buyerModel.findById(verified.Buyerid)
+        req.Buyer = await buyerModel.findById(verified.BuyerId)
             .select({password: 0, orders : 0, carts : 0, address : 0});
         next();
     } catch (err) {
-        res.status(400).send("Invalid Token");
+        res.status(400).send({message: err.message});
     }
 }
 

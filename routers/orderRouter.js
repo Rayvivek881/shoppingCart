@@ -4,7 +4,7 @@ const {
     CreateNewOrder, DeleteOrder
 } = require('../controllers/OrderController');
 
-router.route('/createNewOrder').post(BuyerAuth, CreateNewOrder);
-router.route('/deleteOrder/:id').delete(BuyerAuth, DeleteOrder);
+router.route('/CreateNewOrder').post(BuyerAuth, CreateNewOrder);
+router.route('/DeleteOrder/:id').delete(BuyerAuth, DeleteOrder);
 
 module.exports = router;
