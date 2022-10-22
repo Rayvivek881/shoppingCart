@@ -20,6 +20,10 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    seller: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Seller'
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', ProductSchema);

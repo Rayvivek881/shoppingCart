@@ -16,8 +16,8 @@ app.use(morgan('dev'));
 app.use(cors());
 
 // Routes
-app.use('/api/product', require('./routers/ProductRouter'));
-app.use('/api/buyer', require('./routers/BuyerRouter'));
-app.use('/api/seller', require('./routers/SellerRouter'));
+// app.use('/api/product', require('./routers/ProductRouter'));
+// app.use('/api/buyer', require('./routers/BuyerRouter'));
+app.use('/api/seller', require('../routers/SellerRouter.js'));
 
 app.listen(Port, () => console.log(`Server is running on port ${Port}`));

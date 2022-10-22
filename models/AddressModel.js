@@ -9,19 +9,11 @@ const AddressSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    city: {
-        type: String,
-        required: true
-    },
-    state: {
-        type: String,
-        required: true
-    },
     zip: {
         type: String,
         required: true
     },
-    phone: {
+    mobile : {
         type: String,
         required: true
     }
