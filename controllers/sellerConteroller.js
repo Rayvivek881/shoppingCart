@@ -18,7 +18,6 @@ exports.sellerSignUp = async (req, res) => {
             name, username, mobile, password ,address, zip
         } = req.body;
         const seller = await SellerModel.findOne({$or: [{username: username}, {mobile: mobile}]});
-
         if (seller) {
             return res.status(400).json({message: 'Seller already exists'});
         }
