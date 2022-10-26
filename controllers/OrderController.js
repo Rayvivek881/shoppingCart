@@ -4,7 +4,6 @@ const Product = require('../models/ProductModel');
 const BuyerModel = require('../models/BuyerModel')
 const Order = require('../models/odersModel');
 
-// Create NewOrder
 /**
  *
  * @method POST
@@ -46,7 +45,6 @@ exports.CreateNewOrder = async (req, res) => {
     }
 }
 
-// delete order
 /**
  * @method DELETE
  * @link http://localhost:3000/api/order/DeleteOrder

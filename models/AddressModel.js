@@ -1,4 +1,3 @@
-// address model
 const mongoose = require('mongoose');
 const AddressSchema = new mongoose.Schema({
     name: {

@@ -5,7 +5,6 @@ const OrderModel = require('../models/odersModel.js');
 const AddressModel = require('../models/AddressModel.js');
 const encryption = require('../middlewares/encryption.js');
 
-// Seller Sign Up
 /**
  * 
  * @method POST
@@ -43,7 +42,6 @@ exports.sellerSignUp = async (req, res) => {
     }
 }
 
-// Seller Sign In
 /**
  * 
  * @method POST
@@ -70,7 +68,6 @@ exports.sellerSignIn = async (req, res) => {
     }
 }
 
-// addProduct by seller
 /**
  * 
  * @method POST
@@ -92,7 +89,6 @@ exports.addProduct = async (req, res) => {
     }
 }
 
-// getProducts by seller
 /**
  * @method GET
  * @link http://localhost:3000/api/seller/getProducts
@@ -107,7 +103,6 @@ exports.getProducts = async (req, res) => {
     }
 }
 
-// updateProduct by seller
 /**
  * 
  * @method PUT
@@ -130,7 +125,6 @@ exports.updateProduct = async (req, res) => {
     }
 }
 
-// deleteProduct by seller
 /**
  * 
  * @method DELETE
@@ -148,7 +142,6 @@ exports.deleteProduct = async (req, res) => {
     }
 }
 
-// getOrders by seller
 /**
  * 
  * @method GET
@@ -166,7 +159,6 @@ exports.getOrders = async (req, res) => {
     }
 }
 
-// updateOrder by seller
 /**
  * 
  * @method PUT
@@ -186,7 +178,6 @@ exports.updateOrder = async (req, res) => {
     }
 }
 
-// deleteOrder by seller
 /**
  * 
  * @method DELETE
@@ -203,7 +194,6 @@ exports.deleteOrder = async (req, res) => {
     }
 }
 
-// getProfile by seller
 /**
  * 
  * @method GET
@@ -221,7 +211,6 @@ exports.getProfile = async (req, res) => {
     }
 }
 
-// updateProfile by seller
 /**
  * 
  * @method PUT
@@ -246,7 +235,6 @@ exports.updateProfile = async (req, res) => {
     }
 }
 
-// getProducts by category
 /**
  * 
  * @method GET
@@ -264,7 +252,6 @@ exports.getProductsByCategory = async (req, res) => {
     }
 }
 
-// getProducts by name
 /**
  * 
  * @method GET
@@ -282,7 +269,6 @@ exports.getProductsByName = async (req, res) => {
     }
 }
 
-// getOrders by status
 /**
  * 
  * @method GET

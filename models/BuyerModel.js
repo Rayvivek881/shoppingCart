@@ -1,4 +1,3 @@
-// buyer shemea
 var mongoose = require('mongoose');
 var BuyerSchema = new mongoose.Schema({
     name: {

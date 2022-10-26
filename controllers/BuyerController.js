@@ -4,7 +4,6 @@ const Product = require('../models/ProductModel.js');
 const UserProduct = require('../models/UserProductModel.js');
 const encryption = require('../middlewares/encryption.js');
 
-// Buyer Sign Up
 /**
  * 
  * @method POST 
@@ -38,7 +37,6 @@ exports.buyerSignUp = async (req, res) => {
     }
 }
 
-// Buyer Sign In
 /**
  * 
  * @method POST
@@ -65,7 +63,6 @@ exports.buyerSignIn = async (req, res) => {
     }
 }
 
-// Get All Products
 /**
  *
  * @method GET
@@ -82,7 +79,6 @@ exports.getAllProducts = async (req, res) => {
     }
 }
 
-// Get Product By Id
 /**
  * 
  * @method GET
@@ -99,7 +95,6 @@ exports.getProductById = async (req, res) => {
     }
 }
 
-// Search Products
 /**
  * 
  * @method GET
@@ -118,7 +113,6 @@ exports.searchProducts = async (req, res) => {
     }
 }
 
-// add to cart
 /**
  * 
  * @method POST
@@ -145,7 +139,6 @@ exports.addToCart = async (req, res) => {
     }
 };
 
-// get cart
 /**
  * 
  * @method GET
@@ -163,7 +156,6 @@ exports.getCart = async (req, res) => {
     }
 }
 
-// delete product from cart
 /**
  * 
  * @method DELETE
@@ -184,7 +176,6 @@ exports.deleteProductFromCart = async (req, res) => {
     }
 }
 
-// update product quantity in cart
 /**
  * 
  * @method PUT
@@ -204,7 +195,6 @@ exports.updateProductQuantityInCart = async (req, res) => {
     }
 }
 
-// clear cart
 /**
  * 
  * @method DELETE
@@ -225,7 +215,6 @@ exports.clearCart = async (req, res) => {
     }
 }
 
-// Buyer update profile
 /**
  * 
  * @method PUT
