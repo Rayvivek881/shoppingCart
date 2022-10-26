@@ -13,17 +13,17 @@
 //     ('problem setter DSA', 'intern', 'jabalpur MP', '0 to 1', 'https://google.com', '11'),
 //     ('SDE 3', 'senior_lavel', 'itanager Arunachal pradesh', '5 to 10', 'https://google.com', '12')
 
+
 const Mongourl = `mongodb://localhost:27017/test`;
 const mongoose = require('mongoose');
 const User = require('./model.js');
 
-// mongoose.connect(Mongourl, { useNewUrlParser: true, useUnifiedTopology: true })
-//     .then(() => console.log('MongoDB Connected...'))
-//     .catch(err => console.log(err));
+mongoose.connect(Mongourl, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB Connected...'))
+    .catch(err => console.log(err));
 
 async function answer() {
-    const db = await mongoose.createConnection(Mongourl).asPromise();
-    const session = await db.startSession()
+    const session = await mongoose.startSession();
     session.startTransaction();
     try {
         const result = await User.create([{ name: 'user 1', phone: '7024570230' }], { session });
